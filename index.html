@@ -18,61 +18,127 @@
 		<script>
 			function connectVolt() {
 				console.log('connect volt');
-				volt.bsv.connectAccount({token_map_id: 1})
+				window._volt_javascript_bridge.postMessage(
+				  JSON.stringify({
+				    method: "volt.bsv.connectAccount",
+				    param: {
+				      token_map_id: 1,
+				    },
+				    callback: "connectCallback",
+				  })
+				);
 			}
 			function disconnectVolt() {
 				cosole.log('disconnect volt');
-				volt.bsv.disconnectAccount()
+				window._volt_javascript_bridge.postMessage(
+				  JSON.stringify({
+				    method: "volt.bsv.disconnectAccount",
+				    param: {
+				    },
+				    callback: "disconnectCallback",
+				  })
+				);
 			}
 			function getInfo() {
 				console.log('account info');
-				volt.bsv.getAccountInfo()
+				window._volt_javascript_bridge.postMessage(
+				  JSON.stringify({
+				    method: "volt.bsv.getAccountInfo",
+				    param: {
+				    },
+				    callback: "infoCallback",
+				  })
+				);
 			}
 			function signtx() {
 				cosole.log('signTx');
-				volt.bsv.signTx({ list: [{txHex: '', scriptHex: '', address: '', inputIndex: 0, satoshis: 32, sigtype: 0}] })
+				window._volt_javascript_bridge.postMessage(
+				  JSON.stringify({
+				    method: "volt.bsv.signTx",
+				    param: {
+						list: [{txHex: '', scriptHex: '', address: '', inputIndex: 0, satoshis: 32, sigtype: 0}]
+				    },
+				    callback: "signCallback",
+				  })
+				);
 			}
 			function getDepositAddress() {
 				console.log('deposit address');
-				volt.bsv.getDepositAddress()
+				window._volt_javascript_bridge.postMessage(
+				  JSON.stringify({
+				    method: "volt.bsv.getDepositAddress",
+				    param: {
+				    },
+				    callback: "depositCallback",
+				  })
+				);
 			}
 			function getChangeAddress() {
 				cosole.log('change address');
-				volt.bsv.getChangeAddress()
+				window._volt_javascript_bridge.postMessage(
+				  JSON.stringify({
+				    method: "volt.bsv.getChangeAddress",
+				    param: {
+				    },
+				    callback: "changeCallback",
+				  })
+				);
 			}
 			function transfer() {
 				console.log('connect volt');
-				volt.bsv.transfer()
+				window._volt_javascript_bridge.postMessage(
+				  JSON.stringify({
+				    method: "volt.bsv.transfer",
+				    param: {
+				    },
+				    callback: "transferCallback",
+				  })
+				);
 			}
 			function getBsvBalance() {
 				cosole.log('change address');
-				volt.bsv.getBsvBalance()
+				window._volt_javascript_bridge.postMessage(
+				  JSON.stringify({
+				    method: "volt.bsv.getBsvBalance",
+				    param: {
+				    },
+				    callback: "bsvBalanceCallback",
+				  })
+				);
 			}
 			function getSensibleFtBalance() {
 				console.log('sensible ft balance');
-				volt.bsv.getSensibleFtBalance()
+				window._volt_javascript_bridge.postMessage(
+				  JSON.stringify({
+				    method: "volt.bsv.getSensibleFtBalance",
+				    param: {
+				    },
+				    callback: "ftBalanceCallback",
+				  })
+				);
 			}
-			window.xxxCallback = function (result, errMsg) {
+			function callback(result, errMsg) {
 			  if (errMsg === "") {
 			    console.log("调用成功", result);
 			  } else {
 			    console.log("调用失败, 错误信息", errMsg);
 			  }
 			};
+			window.connectCallback = callback
+			window.disconnectCallback = callback
+			window.infoCallback = callback
+			window.signCallback = callback
+			window.depositCallback = callback
+			window.changeCallback = callback
+			window.transferCallback = callback
+			window.bsvBalanceCallback = callback
+			window.ftBalanceCallback = callback
+			
 			
 			window._volt_javascript_bridge = window._volt_javascript_bridge || {
 			  postMessage: (...args) => console.log(args),
 			};
 			
-			window._volt_javascript_bridge.postMessage(
-			  JSON.stringify({
-			    method: "volt.bsv.connectAccount",
-			    param: {
-			      token_map_id: 1,
-			    },
-			    callback: "xxxCallback",
-			  })
-			);
 		</script>
 	</body>
 </html>
