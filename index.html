@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		
+		<p><button onclick="connectVolt()">Connect volt</button></p>
+		<p><button onclick="disconnectVolt()">disConnect volt</button></p>
+		<p><button onclick="getInfo()">get Account info</button></p>
+		<p><button onclick="signtx()">signtx</button></p>
+		<p><button onclick="getDepositAddress()">get deposit address</button></p>
+		<p><button onclick="getChangeAddress()">get change address</button></p>
+		<p><button onclick="transfer()">transfer</button></p>
+		<p><button onclick="getBsvBalance()">get bsv balance</button></p>
+		<p><button onclick="getSensibleFtBalance()">get sensible ft balance</button></p>
+		<script>
+			function connectVolt() {
+				console.log('connect volt');
+				volt.bsv.connectAccount({token_map_id: 1})
+			}
+			function disconnectVolt() {
+				cosole.log('disconnect volt');
+				volt.bsv.disconnectAccount()
+			}
+			function getInfo() {
+				console.log('account info');
+				volt.bsv.getAccountInfo()
+			}
+			function signtx() {
+				cosole.log('signTx');
+				volt.bsv.signTx({ list: [{txHex: '', scriptHex: '', address: '', inputIndex: 0, satoshis: 32, sigtype: 0}] })
+			}
+			function getDepositAddress() {
+				console.log('deposit address');
+				volt.bsv.getDepositAddress()
+			}
+			function getChangeAddress() {
+				cosole.log('change address');
+				volt.bsv.getChangeAddress()
+			}
+			function transfer() {
+				console.log('connect volt');
+				volt.bsv.transfer()
+			}
+			function getBsvBalance() {
+				cosole.log('change address');
+				volt.bsv.getBsvBalance()
+			}
+			function getSensibleFtBalance() {
+				console.log('sensible ft balance');
+				volt.bsv.getSensibleFtBalance()
+			}
+			window.xxxCallback = function (result, errMsg) {
+			  if (errMsg === "") {
+			    console.log("调用成功", result);
+			  } else {
+			    console.log("调用失败, 错误信息", errMsg);
+			  }
+			};
+			
+			window._volt_javascript_bridge = window._volt_javascript_bridge || {
+			  postMessage: (...args) => console.log(args),
+			};
+			
+			window._volt_javascript_bridge.postMessage(
+			  JSON.stringify({
+			    method: "volt.bsv.connectAccount",
+			    param: {
+			      token_map_id: 1,
+			    },
+			    callback: "xxxCallback",
+			  })
+			);
+		</script>
+	</body>
+</html>
